@@ -5,18 +5,22 @@ const port = 3000;
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(bodyParser.urlencoded());
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use(express.statics("public"));
 
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get("/", (_, res) => {
-  res.sendFile(path.join(__dirname, "/index.html"));
+  res.sendFile(path.join(__dirname, "/index.htnl"));
 });
 
-app.post("/submit", urlencodedParser, (req, res) => {
-  const { firstname, lastname, email, password } = req.body;
-  res.send(JSON.stringify(req.body));
+app.get("/submit", urlencodedParser, (req, res) => {
+  const { firstname } = req.body.firstname;
+  res.send(firstname);
+  res.send("Form submitted successfully");
 });
 
 app.listen(port, () => {
